@@ -1,0 +1,812 @@
+ <!DOCTYPE html>
+<html>
+
+<!-- Mirrored from 192.168.2.2/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Nov 2024 04:25:36 GMT -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ST_BANG</title>
+  <style>
+    h6 {
+
+      width: 30px;
+      margin-right: 10px;
+    }
+
+    body {
+      background-color: #272838;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 90vh;
+
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .save {
+      margin-top: 23px;
+      width: 20px;
+      height: 30px;
+
+
+    }
+
+    .textsave {
+      margin-top: -11px;
+      margin-left: -19px;
+      font-size: 20px;
+    }
+    .group {
+
+      display: flex;
+      flex-direction: column;
+      padding-left: 5%;
+      justify-content: center;
+      width: 90%;
+
+    }
+
+    /* CSS untuk toggle switch */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 30px;
+      height: 17px;
+    }
+
+    .toggle-switch input {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+      border-radius: 17px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 13px;
+      width: 13px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #272838;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #272838;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(13px);
+      -ms-transform: translateX(13px);
+      transform: translateX(13px);
+    }
+
+
+
+    button {
+      background-color: white;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 5px;
+      cursor: pointer;
+      width: 150px;
+      height: auto;
+    }
+
+    .card {
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: row;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 500px;
+      width: 800px;
+    }
+
+    /* Gaya dasar tombol */
+    .card button {
+      background-color: #3f3f41;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 5px;
+      cursor: pointer;
+      width: 100px;
+      height: auto;
+      transition: background-color 0.3s;
+      /* Transisi warna latar saat hover */
+    }
+
+
+
+    /* Tombol hanya terjadi animasi saat di-hover */
+    .card button:hover {
+      background-color: #595b7c;
+      /* Ubah warna latar saat di-hover */
+      animation: pulse 1s infinite;
+      /* Aktifkan animasi saat di-hover */
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+
+    .settings-button {
+      background-color: transparent;
+      border: none;
+
+      cursor: pointer;
+    }
+
+    .settings-icon {
+      width: 50px;
+      height: auto;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.75)
+    }
+
+    .pikclor {
+      margin-top: 25px;
+    }
+
+    .popup-content {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 5px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      /* Lebar maksimum popup content saat tampilan mobile */
+    }
+
+    .close-button {
+      position: absolute;
+      top: -10px;
+      right: 1px;
+      width: 10px;
+
+      background: none;
+      border: none;
+      color: #333;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .version {
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      width: 10px;
+
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    color-picker {
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        max-width: 80%;
+      }
+
+      .card button {
+        max-width: 100%;
+      }
+
+      .settings-icon {
+        max-width: 100%;
+      }
+
+      .card {
+        flex-direction: column;
+        max-width: 88%;
+      }
+
+      .popup-content {
+        max-width: 80%;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <button class="version" style="color: white;">v.7.0</button>
+  <div class="logo">
+    <img style="margin-bottom: -100px;"
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAHCCAIAAACWl6xtAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAO3RFWHRDb21tZW50AHhyOmQ6REFGeVV0TDVIVm86MixqOjcwNDg1NDA1ODk0NjY2Njk1OTQsdDoyMzEwMjYwMryvp+8AAATkaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9J2Fkb2JlOm5zOm1ldGEvJz4KICAgICAgICA8cmRmOlJERiB4bWxuczpyZGY9J2h0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMnPgoKICAgICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogICAgICAgIHhtbG5zOmRjPSdodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyc+CiAgICAgICAgPGRjOnRpdGxlPgogICAgICAgIDxyZGY6QWx0PgogICAgICAgIDxyZGY6bGkgeG1sOmxhbmc9J3gtZGVmYXVsdCc+RGVzYWluIHRhbnBhIGp1ZHVsIC0gMTwvcmRmOmxpPgogICAgICAgIDwvcmRmOkFsdD4KICAgICAgICA8L2RjOnRpdGxlPgogICAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgoKICAgICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogICAgICAgIHhtbG5zOkF0dHJpYj0naHR0cDovL25zLmF0dHJpYnV0aW9uLmNvbS9hZHMvMS4wLyc+CiAgICAgICAgPEF0dHJpYjpBZHM+CiAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSdSZXNvdXJjZSc+CiAgICAgICAgPEF0dHJpYjpDcmVhdGVkPjIwMjMtMTAtMjY8L0F0dHJpYjpDcmVhdGVkPgogICAgICAgIDxBdHRyaWI6RXh0SWQ+NDM0MmYzMmYtMDg2Ni00ZWFlLWJkMWItY2EyMDBlMzNmNzdiPC9BdHRyaWI6RXh0SWQ+CiAgICAgICAgPEF0dHJpYjpGYklkPjUyNTI2NTkxNDE3OTU4MDwvQXR0cmliOkZiSWQ+CiAgICAgICAgPEF0dHJpYjpUb3VjaFR5cGU+MjwvQXR0cmliOlRvdWNoVHlwZT4KICAgICAgICA8L3JkZjpsaT4KICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgPC9BdHRyaWI6QWRzPgogICAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgoKICAgICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogICAgICAgIHhtbG5zOnBkZj0naHR0cDovL25zLmFkb2JlLmNvbS9wZGYvMS4zLyc+CiAgICAgICAgPHBkZjpBdXRob3I+UmFsZiBSZXZhbmthPC9wZGY6QXV0aG9yPgogICAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgoKICAgICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogICAgICAgIHhtbG5zOnhtcD0naHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyc+CiAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5DYW52YTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICAgICAgIDwvcmRmOlJERj4KICAgICAgICA8L3g6eG1wbWV0YT64oxNBAAAZl0lEQVR42u3d93dUZcLA8f1vpAkKuJCEEDrSpfcqKCUoLSC9Ix3XAiy9CKJgQQQVpfcinVBtKKGFFtq+v703GZxMqhAJYcLnnM/Zs4fd3My9mfneO3eeeZ5/vVCiMgDFzL8cAgBxB0DcARB3AMQdAHEHEHcAxB0AcQdA3AEQdwBxdxQAxB0AcQdA3AEQdwDEHUDcARB3AMQdAHEHQNwBxN1RABB3AMQdAHEHQNwBEHcAcQdA3AEQdwDEHQBxBxB3AMQdAHEHQNwBEHcAxB1A3AEQdwDEHQBxB0DcAcQdAHEHQNwBEHcAxB0AcQcQdwDEHQBxB0DcARB3AHEHQNwBEHcAxB0AcQdA3AHEHQBxB0DcARB3AMQdQNwBEHcAxB0AcQdA3AEQdwBxB0DcARB3AMQdAHEHEHcAxB0AcQdA3AEQdwDEHUDcARB3AMQdAHEHQNwBxB0AcQdA3AEQdwDEHQBxBxB3AMQdAHEHQNwBEHcAcQdA3AEQdwDEHQBxB0DcAcQdAHEHQNwBEHcAxB1A3AEQdwDEHQBxB0DcARB3AHEHQNwBEHcAxB0AcQcQdwDEHQBxB0DcARB3AMQdQNwBEHcAxB0AcQdA3AHEHQBxB0DcARB3AMQdAHEHEHcAxB0AcQdA3AEQdwBxB0DcARB3AMQdAHEHQNwBxB0AcQdA3AEQdwDEHUDcARB3AMQdAHEHQNwBEHcAcQdA3AEQdwDEHQBxBxB3AMQdAHEHQNwBEHcAxB1A3AEQdwDEHQBxB0DcAcQdoFgrUTIm7IUSmUoE/9NfcvvBGHEHeGLNfSG/5ub5I4g7gLgDIO4AiPuTV6FC/KDE1kVrwvCO747sVBgmjuhY5HtXAJX+XdULD8S94F4sG7vpi0F3fpnKM2X/xmFbv0qKCsk7R53ZM+ZJOfhj1Ox4pEObhh/4ISof+ZM1f9Yb4q7sQJFJ+3lKNrfP/41bgXNZ3Dgz+dSuUcHZPeTkjlGbvxwk7soOz1VMc/r7vN7KKviX07tHn9qVRdDT4IUctvmLQR/P6b18dq+wJR/2nDqmy7SxmSaP7jygT+sBfVqF9evVsm2Lhm2aZ2rVtEFCfI2q8dXDqsRV+9uqVK6UIO7KDlGQ4J/3jw16GnZm9+gd6wZvzmjoQ18OWjU/MehppJkTukXGdPq4rgMTs8Q0aGu7lg3btMgUtLVa1RoJ8dUzVa1ewm1xcX8sZcvFbfkqySsZsvnlwNgze0aHnN0zeu+372S5p7w26culb30yr0+kj6Z2nzm+68wJmYb1b5v0VuuwwW+17tK+SftWjcI6tG5Up1atGtVqRCrzYmyJkpWzKJGdFou7skPU+/XguLN7xpzdm2nX+iHBCSZs29qk1Yv6ZjvZvP/u6zPGd400tH+bQX1bhyX1bd25XeP2rRpGql2zVvWqNaonZCpTJrYgQ+/Kx4u7sgPR+rYm9M5m1zdDIt/ZbPkyaf0n/cVd2YHiZvvXg8Vd2QFxF3dlB4rO5ROTzu0bcz7C/u+HBikP27Fu8GcLEmdN7CbuT085ZYfodOPs5PP7x57fl+no1hGhkoatXf72pwsSw4LC/mdStyCyYZNHdX6nX5t3+rUN6/16805tGmdq2/jVOrVrVq9Z6y/VE2qUKh1TslSEkpWzKZGD0TJPu+zbvh7sRQIFdvHohJM7Rm1bOzjSuhX9Vs3vs2p+YkhQ1Q+nvB6Z1JkTug7tn9nTd/q37d+7VZDRSK81erVWjVq1I5QuE1OqVKaSORWLpIq7ssMz8U39bF8cPb9vTPoX7nc8dHz7yB8/H7hxdaavP+635IOekd5/9/Upo7uETR3TJWh9v14tw/r0aN66eYPWzTI1rFc3Pq5apBdfjM262oYFN57LuCs7RNHsLrnMPXBu8s2sbpzNIvX0u8FbihPbR4Yd/GHY96sHRlq9sO/i93uGBaeZjOkHMo0f1ik4tbzdM1OPzk1bNWsQKXh7USWuWlj8w3kIcjnNZCz2JO7KDhT5OSa300y2CcJunp2czfUzWVw8NuH4tpGBL5a8Je7KDhgKKe6PPuqxbEHKnv4t5yJ1NXnS9dPvFoZrpybl/HXBtcnjHqLffhpXqEfgxpnJ0oC4i3ueGtarW4A/yfM2J9HFoxMe9xC1b9WoUB9S906vDUxsFY0mDOs4aWSnJ2VkUrtoPAijktqPGNQuSv+CuRqUw8Dc/iWbru2biLu4izsg7uIu7oC4i7u48yyJKVHy7+UYXJj7sMKCburpDFI0FFLcxR2eAQU+6xSPtUTEXdzFHdyWEXdxB8Rd3MUdEHdxF3dA3MVd3AFxF3dxf66HjmQd+5E+ViR9FGNsiVJ/KZmr/EeYOLDiLu5RHveePQeeOXMuKpxKPpPXXgwfPjFa9mLHjj157cVHHy08derMyZOnA8kRThxPPnb0RIaTx46d3LN7f+E9zYYOHTd92oeRxo2bPmLkuyOz6tq1by6nh4wTQ63azRs37hBWvcZrlSrVyaZU6bjHP98U3rnHOHdxL45xHzho1P/9739R4f69e3ntxdSp70fLXvz6y2957cWnn375KFu4dvVa4T3NglPIozyG3bv25bWFTZu23bxxMyz1WuqVy1ezufhnyh9//Bnpzz/+DH71vr0Hs9h3cP36jWvWrI30+Zq1c+cunjVrTqT3Zs0ZPXry8OGTshgxqU/ikO7d+2XRo1+Llt0aNWofSKjWpEQUvk0Rd3EXd3EvrLjn8+5h5869z87RfnD//r27d7O5fetW6MSzcuUat2XEXdzFXdyjL+75+3zN1+Iu7uIu7uIu7uIu7uIu7s933G/euBk8zmtXU7O5+OfF5KwfFz+UfDr4wW1bd+b0449bV69eu3r1VzktXrRi9uyFOb333tyhQ8fnqmevQe3b9+zQIV29eq3EXdzFXdwLPe5Ll36Sei01p5/P/3Iq+XTYgf0/Fd7TrHefpGHDJkQaPnxCp069O3bsFem11zpGDDXJokp8w5q1mgX/GVelQU4xsa9WrFgzV2VejC9dpkpOpUrF5jFm5jkdshlNca9QIf7o1hGPW66tXyVFhe8+HRBfpbq4F8u4//7bhXNnfw6cP/fzgQOHtmzeEbJh/cZlS1cFsQ4sWbwyfUTHzNnpZs3p2/edvPaiVu3mrVu/nq5N99q1m9eq3SwkIaFxfHzD+KrpKse8WvGV2iVLxZbMbwx7/h5xSkUjysX9SYipnFCAvkeL5J2j/nnfxT16r9zvpN25k5YWcu7s+bz2YsnST65dSw3548Kfufrt198PHTpaeK/EQUmjJk2aNXbMlAEDRg4YmIs33xzYsVPv15p2ymtMerXqTV6t1zpScE5KvzZ/pVZOGT/4eGcgV/H/irpHHBtT7fi2kcW17yd3jKoSW03c3Zb55/fcb928FeSyqO65P7h//+6dOzu25/lVrI3fb864254p5WLKhd//yFX6F7tO5+LwoaNbt+zYumVndlt3rvrk82XLVi1f9mk2//3vkokTZ06cOCOHmUlJo/v3H5FTq1avZ5wtxF3fi7Tv4i7uYVcuX+nTZ7DRMkbL6Htx6Lu4i3uk/z148MnKz18uX13cxV3fn5W+Bzso7uL+D+Mecvbs+eYtuoh7waz65HNxf9qCy9sggsW178GpqwB9L/K47917YNOm7YXhl59/fWpx37p1ZyHtxcU/U55+3AN379ydMeOjkunjBZ983G/fun3j+o2ctmzekdcWvvhiXfLJU9lnifnLrp17N2z4YcP6jWvXbliy5JNs3n9/3n/+899cjR07dejQ8cNy83a/YV279e3W7a2c2rd/s1Hj9rlq2KhdbGw9cdf3ou97kce9abPOhfS3XrBg+VOL+yv/rl1Ie/HVV+uvp16PLOCVy1fOn/s5m3ym3Jo+7cP9+34KbNy45dtvf8zV6s++WrZ0VU6DB48pW65qAScNjhiLUvfVVo2bdAyrXadFzVrNcqoSn+cnuhVfqRUc5BfLVs1V6TJVCjQSpjA/9ixpVkh9L9K+i/szHvdBg0ZNmjRz6Dvjhg59KGnwmLfeHhrSu3dSp859Aq3bdM9zQHDsq7XSh7enq127Rbo6LSpWrFWhQs2w8hFKlYormUVsWP7j3IumoYh7tr4n7yzOfY+pnCDuxSPu33+3Kf/PP9NupwXOnD6X1xYWLfz4UsqlbM6d+/nc2fO5On7s5OHDx7JZvHhlcO1c4L1I7DtkxIiJOY0cMbFXr0Fv9hwY0qZtj7yGpdev36Zlq9fDGjXuULNmLtf+VRMa5X8uyXsIfOwTvfaPKWE+96ISX6V6Me770a0jHrHv4h7VcS+8e+65/oq27d4oqg9Ut2zZETqNhVxPvZ5yMSXl4qVsdua9aAnPS9z1XdzFvQAjiz78cEHpMlWe2dEyx4+flGlx13dxF/eC+OngkTp1W4i7uEdB30/vHl2M+16pUlVxF/cn6+aNm8OGTRB3cX/WJcQX574f3jw8n76Lu7gX2Ib1P1SOqVugce63bt3M7nrq9fXfbMxrCytXrjl65Hik/ft/2rZ117ZtWaxcsfpJHflHmecy3w9dxV3fi7TvRR734CWdbUKoJyXtdlpxjfu9u/euXrkaSN/TjOkejx9PzmsLc+cuPnXqzKFDRw8fOnrk8LEjR46H7d1zIGPlil3bt++OlL5+9Oq1a9Z8HenzNV9/+OH8mTNnRxo16t18RtGEw/da007t2r0Z0qbtGw0bpX/ZJ5t69VtXjnk1r+EoL5aNL/dSQqQyL8b/s/gWdoWNlnmW+n5mz3PXd9MPRGPcg8ccOoGdzqh2YOP3m/MZKb940Yo5sxfNnbN4+LAJkesHDRgwIjFxSMZg+cQsOvUJtG/fs8lrHZs0ydS4SYdA/fptEqo1SajWOKxKfIOSua998de4wMcZemiwvLg/eTWq1ZgxvmtU+HRB4uNGefeGd8TdbZnHkuv9k9RrqRd+v5DNzp17GzRom89NlZ079mTz3XebPs94QxA2Y8ZHeW1hcNKYIUPG9u8/PJvg/NShQ6/2HXqGNGvepaCX8JXLlUvI9uYgkP93X/PbuG+oUjCd2zV+3Cj/fmi8uIt74bl96/a4cdOi9wPVzZu2B48zm58OHs52zyok+LusXr12TQ7z5y/r2XOgK3fEXdyflbjfu3s3uE7/58dz06ZtcVXqR2Pcf/vtgil/EXdxL25xv3b1Wv0GbR6xwvm7lHLpzaxXr+Iu7oi7uBdZ3EODUubNW/rg/v1/eFT/9+DB8uWfvfRytaiOe/DcSLt9O6u0lIspF//M4vffLpw+dTZs7pzF4o64i/uzFfeHz67OfS5c+OOfH9ugdE2bdson7nfS0iJnjNm+bXdeexFcDkeuhhps+aeDR346eDjS7t37FixYXuBD3bFT7+49+kdq0/aN5i26RmrRomvNms1q1GwaKT6+4cvlq4eVLVu1hLgj7uL+9OMeXFZfT70elnotNbj2PHL4WORPVapcZ+nSVfv2HQzNBR/yww9bvv7622/WfRe2du2GOXMWhcZZhk2b9sGwoeOHD5swfPiEIUPGxsbVS0wc3Lv34DfeGBApqGfLlt1aRKhfv02eQ1leSogMaPCeILf5HR9jbAziLu7iXtzi/uD+/cuXLl9KeSjlYkryydO5zqdYrXqTD96fH1wOhyxc+PGC+cvGjZ06dsyUkDFjpowbN23w4DHdu/fr3uOhHj36v/nmgCDWzZp1CWvarPNrTTvVrps+m3yk4FfExNYLyecwliqd+5DEF3LSB3EXd3F3WybX2zKRatdpfvDg4Sc3KU32pfUupVzKWEzql8DarzbktRdLFq8MDsV3WX355fply1ZFmj7jwwJPMNCgYbs6dVuGFzYJqVmrWUzsqzExWVR8pVbO1aAyvquV7R2DuCPuUR73O2l37qSlFYZH/Gyz8OIeKF067oMP5gUHqrD/FkX+gWrOxV1Tr6XmXNTwxPHk9LVb92Xav+/gxo2bQ2sWjh8/3ZU74l5M4l7kCjXuIW3a9njENcejN+6GQiLuTyzu3337Y1CfwnDyxClxf4JxD1SoWDMoV3GN+7x5S/N/RqWlpYk74v58Tfn7nMQ9pF//4deupRa/uP+tY0dP/Pbr72Hnzp5PTj4d6fDhY5s3bX/33ffEHXEX9+iLe2gUze5d+x73Qd67e+/unTuRbt28dfXKtatXH/rxh615/cbVq9dGflHowP5DWzbv2LIl04YNPyxbumr6tL/9QLXAAygrV6hQo2LFmmEZcw7ntylxR9zFPcriHihZKmbQoFELF368eNGK2bMXjhs3bfy46WFjxkzpP2BkpAEDRnbt2rdjp96RWrTs9mq91mHBOSM9viUqZ1fwIe1aIe7iLu7i/vgHuXyFGtOmfxBcVn/yyefp32aKNHvRyJGTRoyYGGFS9+5vd+7Uu3OnPmEtWnStXadFnQxVExrnNZn7y+Wrv/JKrUjlXqpWukyVSHnMKa/44i7u4i7ujy/I7ooVa/734EGh3nMPzh+nks9EOnDg0PZtu7Zv2x324w9bP5q98Mk9hbKfFarEN8imcuW6FV+pFSk425UqHSfuiLu4R33cQ3r1Trp86Urx/kD1t19/z7aUY/AvySdPRzp29MTUKe+Le+EqXSamWkKN4qp/71aPG+VfD44Td3EvpLgHgivZLVt2FOO4X7l8xVDIZ0LDenWL64KoBXDj7OQeXZo+g3Fv2bJbmRerFIaFCz8W96cZ95AJE2Y84tLkhRH3E8eTC+npFLhy5aq4i3t0lN03VMX9icc9/aXXqF0Q2SKJ+996cP/+vbt3I+Wc7ubypcuRUi5e+v23C5GST54OHuqePQfCvv32x88++/Kzz74KDB82QdzFvYjLLu7iXhhxD5QtV3XRohWhiXFy9jTt9u2bN25Gunr12pXLVzZu3JLXBteu/TZ9Fpe9B8J2bN+9Zk2W9UsXL145c+bsWTPnhI0dN23YsImRevcZnD6BZYTGTTo0atQ+rEGDtpUq1/13pTph5cvXyDEW8+9HYQb/N3EX9yIru7g/qbgvX/5p0LLCcP7cz9EY9xLpw9VjWrToOmzYhP79R/To0T9Sm7ZvNG7cIVOTDlUTGlWqVLdCxZqhHyyRy1eNHiWphlqIu7KLuyl/CzPukZfww4dPXLFi9ccfZ1q2bNWsWXMiTZo0a8CAkV26JOa1nfr1W9es2TSuSoNIlSoHV9a1I730crVIZcsllCodF6mECd/F/Xkou7iLe2HHPST55OnCuOd+PfX6lctXIlw9fuzksaMnwn46ePiHjVs2btwctm7dd8uXfxZp3rylM2bMnjkzU8a7jeERRrRt90aLjDX2Qlq27BZXpX5sXKbQSiMh4ZVjxV3ci6zs4i7uTyfuT22B7KLy4P794Oxy+VK6Zcs+FXdxL+Kyi7u4i/sTZyikuBd92cVd3MVd3MW9GJZd3MX9OY978Ne/f+9+yJ20tLTbD926eSs87P166vXwpMQpF1OOHDl+5PCxwNEjx9d/s/Gbdd+l++b7BQuWz5mzaO6cRW+/PfSFjJksxV3ci6zs4i7u0RL3rVt2hhaVzTZG/tq11NS/nD1zLgju0SMnAtu37Vr/zfdBfANr1nw9d+6SkA/enzd+/IyHJsxI7DukT5/BgcTEIa1ad2/WrEuz5ulq124eG1svpHyFGrnOMJxjLGaOhx1VfRf3YlV2cRf3Io/7jh17tm7dGdi2dde4cdPy2kK9eq1btOwaaNKkQ1zcw+zGxdXPuvjGI2cXcS/eZRd3cY+WK/flyz/96eCRwN49B4JL8m8yBP9l4cLl8+cvC5k69YOJE2eGDB48plevQSEdO/Zq1KhdSN26LctXqBlcjIeUeykhrMyL8eFpZEqVjitZKjbkORkaL+7FquziLu7P+T33SymXLv6ZEki5mHL0yPGDBw4fPJhu8+bt677+bt26dMEBnDdvacjcuYuDZ8WUKekmT34vKWl00qAMSaNf7/52ly6JgQYN24q7uBdx2Qsv7o0at3/vvblRYebM2XntRZu2PR5xI2XLVS2kp3G/fsMe5QGMHz89ry307DnwUbYwZcp/Cu/FOGLEpEd5DHPnLslrC0mDx0TLM6p37yRxF/ciLnvhxR0Qd3EviFvnpvzzsos7EH1xB0DcAcQdAHEHQNwBEHcAxB0AcQcQdwDEHQBxB0DcARB3AHEHQNwBEHcAxB0AcQdA3AHEHQBxB0DcARB3AMQdQNwBEHcAxB0AcQdA3AEQdwBxB0DcARB3AMQdAHEHEHcAxB0AcQdA3AEQdwDEHUDcARB3AMQdAHEHQNwBxB0AcQdA3AEQdwDEHQBxBxB3AMQdAHEHQNwBEHcAcQdA3AEQdwDEHQBxB0DcAcQdAHEHQNwBEHcAxB1A3AEQdwDEHQBxB0DcARB3AHEHQNwBEHcAxB0AcQcQdwDEHQBxB0DcARB3AMQdQNwBEHcAxB0AcQdA3AHEHQBxB0DcARB3AMQdAHEHEHcAxB0AcQdA3AEQdwBxB0DcARB3AMQdAHEHQNwBxB0AcQdA3AEQdwDEHUDcARB3AMQdAHEHQNwBEHcAcQdA3AEQdwDEHQBxBxB3AMQdAHEHQNwBEHcAxB1A3AEQdwDEHQBxB0DcAcQdAHEHQNwBEHcAxB0AcQcQdwDEHQBxB0DcARB3AHEHQNwBEHcAxB0AcQdA3AHEHQBxB0DcARB3AMQdQNwBEHcAxB0AcQdA3AEQdwBxB0DcARB3AMQdAHEHEHcAxB0AcQdA3AEQdwDEHUDcARB3AMQdAHEHQNwBxB2AKPb/EHtdp554BhEAAAAASUVORK5CYII="
+      width="100%" alt="" srcset="">
+  </div>
+  <div class="card">
+    <div class="buttonz">
+      <button id="animateButton" style="width: 100px; height: 80px; font-size:40px;">💫</button>
+      <button id="settingsButton" style="width: 100px;height: 80px; font-size:40px;">⚙</button>
+    </div>
+    <!-- Konten card di sini -->
+  </div>
+  <div class="card">
+    <table style="display: flex; color: white; justify-content: center;">
+      <tr>
+        <td>
+          <p style="text-align: center; margin-top: 20px; font-size: 12px;"><a
+              href="https://wa.me/6281391543454" style="text-decoration: none; color: #e9e16f;">B_Mz Store</a>
+          </p>
+        </td>
+        <td>
+          <p style="text-align: center; margin-top: 20px; font-size: 12px;">Status Board : <span
+              id="statusboard">Loading...</span></p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Popup untuk animasi -->
+  <div class="popup" id="animatePopup">
+    <div class="popup-content">
+      <button class="close-button" onclick="closePopup('animatePopup')">X</button>
+      <label style=" font-weight: 400; 
+            font-size: 16px; 
+            color: #333; 
+            text-transform: uppercase;
+            letter-spacing: 1px; 
+            margin-bottom: 10px; " for="">ANIMATION</label>
+      <br>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 10px;" method="post">
+        <input type="text" name="mode" hidden value="4">
+        <br>
+        <div style="display: flex; height:20px; justify-content: left;">
+          <h6>Animation Rem</h6>
+          <select id="rem-select" style=" margin-left: 15px; width: 90%; height: 30px; margin-top: 24px;"
+            name="parameter6">
+            <option value="1">REM 1</option>
+            <option value="2">REM 2</option>
+            <option value="3">REM 3</option>
+            <option value="4">REM 4</option>
+            <!-- Tambahkan opsi REM lainnya sesuai kebutuhan -->
+          </select>
+          <button class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 10px;" method="post">
+        <input type="text" name="mode" hidden value="5">
+        <br>
+        <div style="display: flex;height:20px; justify-content: left;">
+          <h6>Animation Sein</h6>
+          <select id="sein-select" style=" margin-left: 15px; width: 90%;  height: 30px; margin-top: 24px;"
+            name="parameter7">
+            <option value="1">SEIN 1</option>
+            <option value="2">SEIN 2</option>
+            <!-- Tambahkan opsi REM lainnya sesuai kebutuhan -->
+          </select>
+          <button style="margin-top: 24px;" class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 10px;" method="post">
+        <input type="text" name="mode" hidden value="6">
+        <br>
+        <div style="display: flex;height:20px; justify-content: left;">
+          <h6>Font</h6>
+          <select id="font-select" style=" margin-left: 21px; width: 90%;  height: 30px; margin-top: 18px;"
+            name="parameter8">
+            <option value="1">Normal</option>
+            <option value="2">Bold</option>
+            <!-- Tambahkan opsi REM lainnya sesuai kebutuhan -->
+          </select>
+          <button style="margin-top: 18px;" class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+      <form action="http://192.168.2.2/message" style="display: flex; flex-direction: column; align-items: center;" method="post">
+        <input type="text" name="mode" hidden value="7">
+        <br>
+        <div style=" width:100%; display: flex; justify-content:space-between;">
+          <h6 style="width:100%; margin-top: 25px;">Animation Running</h6>
+          <button type="reset"
+            style=" margin-top: 17px; margin-left: 130px; height: 10px;  width: 25px; font-size: 15px;">❌</button>
+          <button class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+        <div class="group">
+
+          <label>
+            <input type="text" style="width: 90%; margin-bottom:10px; margin-left: -20px;" maxlength="60"
+              id="runningtext1" name="runningtext1" value="" placeholder="isi untuk memakai running text1">
+          </label>
+
+          <label>
+            <input type="text" style="width: 90%; margin-bottom:10px; margin-left: -20px;" maxlength="60"
+              id="runningtext2" name="runningtext2" value="" placeholder="isi untuk memakai running text2">
+          </label>
+
+          <label>
+            <input type="text" style="width: 90%; margin-bottom:10px; margin-left: -20px;" maxlength="60"
+              id="runningtext3" name="runningtext3" value="" placeholder="isi untuk memakai running text3">
+          </label>
+
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="all" type="checkbox" name="parameter4" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Auto </span>
+            </label>
+
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation1" type="checkbox" name="animation1" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation1 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation2" type="checkbox" name="animation2" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation2 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation3" type="checkbox" name="animation3" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation3 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation4" type="checkbox" name="animation4" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation4 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation5" type="checkbox" name="animation5" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation5 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation6" type="checkbox" name="animation6" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation6 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation7" type="checkbox" name="animation7" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation7 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation8" type="checkbox" name="animation8" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation8 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation9" type="checkbox" name="animation9" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation9 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation10" type="checkbox" name="animation10" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation10 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation11" type="checkbox" name="animation11" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation11 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation12" type="checkbox" name="animation12" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation12 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation13" type="checkbox" name="animation13" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation13 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation14" type="checkbox" name="animation14" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation14 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation15" type="checkbox" name="animation15" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation15 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation16" type="checkbox" name="animation16" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation16 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation17" type="checkbox" name="animation17" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation17 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation18" type="checkbox" name="animation18" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation18 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation19" type="checkbox" name="animation19" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation19 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation20" type="checkbox" name="animation20" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation20 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation21" type="checkbox" name="animation21" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation21 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation22" type="checkbox" name="animation22" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation22 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation23" type="checkbox" name="animation23" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation23 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation24" type="checkbox" name="animation24" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation24 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation25" type="checkbox" name="animation25" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation25 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation26" type="checkbox" name="animation26" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation26 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation27" type="checkbox" name="animation27" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation27 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation28" type="checkbox" name="animation28" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation28 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation29" type="checkbox" name="animation29" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation29 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation30" type="checkbox" name="animation30" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation30 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation31" type="checkbox" name="animation31" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation31 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation32" type="checkbox" name="animation32" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation32 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation33" type="checkbox" name="animation33" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation33 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation34" type="checkbox" name="animation34" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation34 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation35" type="checkbox" name="animation35" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation35 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation36" type="checkbox" name="animation36" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation36 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation37" type="checkbox" name="animation37" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation37 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation38" type="checkbox" name="animation38" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation38 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation39" type="checkbox" name="animation39" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation39 </span>
+            </label>
+            <label class="toggle-switch">
+              <input id="animation40" type="checkbox" name="animation40" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation40 </span>
+            </label>
+          </div>
+          <div style="margin-bottom: 10px; width:60%; display: flex; justify-content:space-between;">
+            <label class="toggle-switch">
+              <input id="animation41" type="checkbox" name="animation41" value="1">
+              <span class="slider"></span> <span style="margin-left: 32px;">Animation41 </span>
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="popup" id="settingsPopup">
+    <div class="popup-content">
+      <label style=" font-weight: 400; 
+            font-size: 16px; 
+            color: #333; 
+            text-transform: uppercase;
+            letter-spacing: 1px; 
+            margin-bottom: 10px; " for="">SETTINGS</label>
+      <br>
+      <button class="close-button" onclick="closePopup('settingsPopup')">X</button>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 20px;" method="post">
+        <input type="text" name="mode" hidden value="8">
+        <br>
+        <div style="display: flex; height:20px; justify-content: left;">
+          <h6>Wifi</h6>
+          <div class="" style=" width: 100%; margin-left: 10px; margin-top: 20px;">
+            <input type="text" required style="width: 90%; margin-bottom:3px;" id="ssid" name="ssid" value=""
+              placeholder="SSID">
+            <input type="text" minlength="8" style="width: 90%;margin-top:px;" id="password" name="password" value=""
+              placeholder="Password">
+          </div>
+          <button class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 20px;" method="post">
+        <input type="text" name="mode" hidden value="9">
+        <br>
+        <div style="display: flex; height:10px; justify-content: left;">
+          <h6>Jumlah Led </h6>
+          <div class="" style=" width: 100%;margin-top: 24px;">
+            <select id="jl" style=" margin-left: 2%; width: 94%;  height: 30px; margin-top: 0px;" name="parameter5">
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <button class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 10px;" method="post">
+        <input type="text" name="mode" hidden value="10">
+        <br>
+        <div style="display: flex; height:20px; justify-content: left;">
+          <h6>Speed</h6>
+          <div class="" style=" width: 100%;margin-top: 21px;">
+            <input name="parameter2" style="width: 90%;" id="speed" type="range" value="0" step="5" min="0" max="30">
+          </div>
+          <button class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 10px;" method="post">
+        <input type="text" name="mode" hidden value="11">
+        <br>
+        <div style="display: flex; height:20px; justify-content: left;">
+          <h6>Bright</h6>
+          <div class="" style=" width: 100%;margin-top: 21px;">
+            <input name="parameter1" style="width: 90%;" id="bright" type="range" value="5" step="1" min="1" max="10">
+          </div>
+          <button class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+      <form action="http://192.168.2.2/message" style="margin-bottom: 50px;" method="post">
+        <input type="text" name="mode" hidden value="12">
+        <br>
+        <div style="display: flex; height:20px; justify-content: left;">
+          <h6>Interval</h6>
+          <div class="" style=" width: 100%;margin-top: 21px;">
+            <input name="parameter3" id="durasi" style="width: 90%;" type="range" value="15" step="5" min="5" max="30">
+          </div>
+          <button class="save">
+            <p class="textsave">💾</p>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    function updateStatus() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET.html', '/data', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var responseData = xhr.responseText;
+          var paramMappings = {
+            "rem": "rem-select",
+            "text1": "runningtext1",
+            "text2": "runningtext2",
+            "text3": "runningtext3",
+            "sein": "sein-select",
+            "font": "font-select",
+            "ssid": "ssid",
+            "password": "password",
+            "speed": "speed",
+            "durasi": "durasi",
+            "bright": "bright",
+            "jl": "jl",
+            "all": "all",
+            "animation1": "animation1",
+            "animation2": "animation2",
+            "animation3": "animation3",
+            "animation4": "animation4",
+            "animation5": "animation5",
+            "animation6": "animation6",
+            "animation7": "animation7",
+            "animation8": "animation8",
+            "animation9": "animation9",
+            "animation10": "animation10",
+            "animation11": "animation11",
+            "animation12": "animation12",
+            "animation13": "animation13",
+            "animation14": "animation14",
+            "animation15": "animation15",
+            "animation16": "animation16",
+            "animation17": "animation17",
+            "animation18": "animation18",
+            "animation19": "animation19",
+            "animation20": "animation20",
+            "animation21": "animation21",
+            "animation22": "animation22",
+            "animation23": "animation23",
+            "animation24": "animation24",
+            "animation25": "animation25",
+            "animation26": "animation26",
+            "animation27": "animation27",
+            "animation28": "animation28",
+            "animation29": "animation29",
+            "animation30": "animation30",
+            "animation31": "animation31",
+            "animation32": "animation32",
+            "animation33": "animation33",
+            "animation34": "animation34",
+            "animation35": "animation35",
+            "animation36": "animation36",
+            "animation37": "animation37",
+            "animation38": "animation38",
+            "animation39": "animation39",
+            "animation40": "animation40",
+            "animation41": "animation41",
+            "statusboard": "statusboard",
+            // Tambahkan lebih banyak pemetaan parameter di sini
+          };
+
+          var dataParts = responseData.split("&");
+          for (var i = 0; i < dataParts.length; i++) {
+            var paramParts = dataParts[i].split("=");
+            var paramName = paramParts[0];
+            var paramValue = paramParts[1];
+
+            if (paramMappings[paramName]) {
+              var elementId = paramMappings[paramName];
+              var element = document.getElementById(elementId);
+
+              if (paramName === "all" || paramName.startsWith("animation")) {
+                element.checked = paramValue === "1";
+              } else {
+                element.value = paramValue;
+              }
+            }
+          }
+
+          var statusboard = paramValue; // Gantilah dengan nama parameter yang sesuai
+          document.getElementById('statusboard').textContent = statusboard;
+        }
+      };
+      xhr.send();
+    }
+
+    window.onload = updateStatus;// Memulai permintaan pertama
+    let popupForms1 = document.querySelectorAll('.single-color form');
+    let popupForms2 = document.querySelectorAll('.multiple-color form');
+
+    function openPopup(popupId) {
+      var popup = document.getElementById(popupId);
+      popup.style.display = "flex";
+    }
+
+    function closePopup(popupId) {
+      var popup = document.getElementById(popupId);
+      popup.style.display = "none";
+    }
+
+    document.getElementById("animateButton").addEventListener("click", function () {
+      openPopup("animatePopup");
+    });
+
+    document.getElementById("settingsButton").addEventListener("click", function () {
+      openPopup("settingsPopup");
+    });
+  </script>
+</body>
+
+
+<!-- Mirrored from 192.168.2.2/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Nov 2024 04:25:37 GMT -->
+</html>
