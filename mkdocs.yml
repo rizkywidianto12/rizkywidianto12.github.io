@@ -1,6 +1,6 @@
 site_name: Blog Tutorial
 site_description: an example blog set up following the tutorial
-site_url: http://relectroz.my.id
+# site_url: http://relectroz.my.id
 
 theme:
   name: material
