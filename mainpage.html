@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Control Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      background-color: #ff7f00;
+      color: white;
+      padding: 10px;
+      margin: 0;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      margin: 20px;
+    }
+
+    .column {
+      padding: 10px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .column h3 {
+      background-color: #ff7f00;
+      color: white;
+      margin: 0;
+      padding: 5px;
+      border-radius: 3px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0;
+      font-weight: bold;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 20px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #5cb85c;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Vertical Slider */
+    .vertical-slider-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .vertical-slider {
+      -webkit-appearance: none;
+      width: 230px;
+      /* Panjang slider ke bawah */
+      height: 8px;
+      background: #ddd;
+      border-radius: 5px;
+      outline: none;
+      //transform: rotate(-90deg);
+      transform-origin: center;
+    }
+
+    .vertical-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #ff7f00;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .vertical-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #ff7f00;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .vertical-label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    /* Responsivitas untuk layar kecil */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .login-container {
+        width: 100%;
+        padding: 15px;
+      }
+
+      input {
+        width: 100%;
+        /* Input akan mengikuti lebar kolom */
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: white;
+        box-sizing: border-box;
+        /* Sertakan padding dalam perhitungan width */
+
+      }
+  </style>
+</head>
+
+<body>
+  <h1>Control Panel</h1>
+  <div class="container">
+    <!-- Kolom A -->
+    <div class="column" id="columnA">
+      <h3>A</h3>
+    </div>
+
+    <!-- Kolom B -->
+    <div class="column" id="columnB">
+      <h3>B</h3>
+    </div>
+
+    <!-- Kolom C -->
+    <div class="column" id="columnC">
+      <h3>C</h3>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi untuk men-generate switch secara dinamis
+    function createSwitches(columnId, count) {
+      const column = document.getElementById(columnId);
+      for (let i = 1; i <= count; i++) {
+        // Buat elemen div baris
+        const row = document.createElement("div");
+        row.classList.add("row");
+
+        // Label angka
+        const label = document.createElement("label");
+        label.textContent = i;
+
+        // Wrapper untuk switch
+        const switchLabel = document.createElement("label");
+        switchLabel.classList.add("switch");
+
+        // Input checkbox
+        const input = document.createElement("input");
+        input.type = "checkbox";
+
+        // Slider
+        const slider = document.createElement("span");
+        slider.classList.add("slider");
+
+        // Gabungkan elemen
+        switchLabel.appendChild(input);
+        switchLabel.appendChild(slider);
+        row.appendChild(label);
+        row.appendChild(switchLabel);
+        column.appendChild(row);
+      }
+    }
+
+    // Generate 16 switch untuk setiap kolom
+    createSwitches("columnA", 16);
+    createSwitches("columnB", 16);
+    createSwitches("columnC", 16);
+  </script>
+
+  </div>
+  <!-- Slider A -->
+  <div class="vertical-slider-container">
+    <div class="row"><label>SPEED A</label>
+      <input type="range" class="vertical-slider" min="0" max="100" value="50">
+    </div>
+  </div>
+  </div>
+  <!-- Slider B -->
+  <div class="vertical-slider-container">
+    <div class="row"><label>SPEED B</label>
+      <input type="range" class="vertical-slider" min="0" max="100" value="50">
+    </div>
+  </div>
+  </div>
+  <!-- Slider C -->
+  <div class="vertical-slider-container">
+    <div class="row"><label>SPEED C</label>
+      <input type="range" class="vertical-slider" min="0" max="100" value="50">
+    </div>
+  </div>
+
+  <script>
+    // Fungsi untuk mengirim status tombol ke server
+  function updateSwitch(id, status) {
+    // Kirim permintaan ke server dengan XMLHttpRequest (AJAX)
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", `/update?id=${id}&status=${status}`, true);
+    xhr.send();
+  }
+
+  // Tambahkan event listener ke semua switch
+  document.querySelectorAll(".switch input").forEach((checkbox, index) => {
+    checkbox.addEventListener("change", function () {
+      const id = index + 1; // Nomor tombol (berdasarkan urutan)
+      const status = this.checked ? 1 : 0; // Status tombol (1 = ON, 0 = OFF)
+      updateSwitch(id, status);
+    });
+  });
+  </script>
+
+  <script>
+    // Fungsi untuk mendapatkan status awal dari ESP
+  function loadInitialState() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/status", true); // Endpoint untuk mendapatkan status awal
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText); // Format respons: { switches: [...], sliders: [...] }
+
+        // Update status tombol
+        document.querySelectorAll(".switch input").forEach((checkbox, index) => {
+          checkbox.checked = data.switches[index] === 1;
+        });
+
+        // Update nilai slider
+        const sliders = document.querySelectorAll(".vertical-slider");
+        sliders[0].value = data.sliders[0];
+        sliders[1].value = data.sliders[1];
+        sliders[2].value = data.sliders[2];
+      }
+    };
+    xhr.send();
+  }
+
+  // Fungsi untuk mengirim status tombol ke ESP
+  function updateSwitch(id, status) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/update?id=${id}&status=${status}`, true); // Endpoint untuk memperbarui status tombol
+    xhr.send();
+  }
+
+  // Fungsi untuk mengirim nilai slider ke ESP
+  function updateSlider(id, value) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/slider?id=${id}&value=${value}`, true); // Endpoint untuk memperbarui nilai slider
+    xhr.send();
+  }
+
+  // Menambahkan event listener ke semua tombol
+  function setupEventListeners() {
+    document.querySelectorAll(".switch input").forEach((checkbox, index) => {
+      checkbox.addEventListener("change", function () {
+        const id = index + 1;
+        const status = this.checked ? 1 : 0;
+        updateSwitch(id, status);
+      });
+    });
+
+    // Menambahkan event listener ke slider
+    document.querySelectorAll(".vertical-slider").forEach((slider, index) => {
+      slider.addEventListener("input", function () {
+        const id = index + 1;
+        const value = this.value;
+        updateSlider(id, value);
+      });
+    });
+  }
+
+  // Panggil fungsi saat halaman dimuat
+  document.addEventListener("DOMContentLoaded", () => {
+    loadInitialState();
+    setupEventListeners();
+  });
+  </script>
+</body>
+
+</html>
